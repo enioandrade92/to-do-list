@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/user/user.module';
+import { TaskModule } from './modules/task/task.module';
 
 @Module({
     imports: [
@@ -18,6 +21,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             autoLoadEntities: true,
             synchronize: true,
         }),
+        AuthModule,
+        UsersModule,
+        TaskModule,
     ],
     controllers: [AppController],
 })
