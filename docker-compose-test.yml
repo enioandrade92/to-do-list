@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+    db:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_HOST: 'localhost'
+            POSTGRES_USER: 'my_user'
+            POSTGRES_PASSWORD: 'my_password'
+            POSTGRES_DB: 'test_to_do_list_database'
+        ports:
+            - '5433:5432'
