@@ -9,7 +9,7 @@ import BcryptUtil from './utils/bcrypt.util';
 import JwtUtil from './utils/jwt.util';
 import { SignInDto } from './dto/sign-in.dto';
 import { TokensDto } from './dto/tokens.dto';
-import { JwtPayload } from './@types/jwt-payload.type';
+import { UserJwtPayload } from './@types/user-jwt-payload.type';
 import { User } from '../user/entities/user.entity';
 
 @Injectable()
@@ -52,7 +52,7 @@ export class AuthService {
     }
 
     async generateAuthTokens(user: Partial<User>): Promise<TokensDto> {
-        const payload: JwtPayload = {
+        const payload: UserJwtPayload = {
             id: user.id,
             email: user.email,
             name: user.name,

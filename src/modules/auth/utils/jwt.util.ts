@@ -1,22 +1,22 @@
-import {
-    InternalServerErrorException,
-    UnauthorizedException,
-} from '@nestjs/common';
+import { InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from '../@types/jwt-payload.type';
+import { UserJwtPayload } from '../@types/user-jwt-payload.type';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const jwtService = new JwtService({
     secret: process.env.JWT_SECRET,
 });
 
 export default class JwtUtil {
-    static getAccessToken(payload: JwtPayload) {
+    static getAccessToken(payload: UserJwtPayload) {
         return jwtService.sign(payload, {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
         });
     }
 
-    static getRefreshToken(payload: JwtPayload) {
+    static getRefreshToken(payload: UserJwtPayload) {
         return jwtService.sign(payload, {
             expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
         });
