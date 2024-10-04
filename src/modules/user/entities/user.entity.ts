@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'users' })
-export class User extends BaseEntity {
+export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -39,14 +39,12 @@ export class User extends BaseEntity {
     @CreateDateColumn({
         name: 'created_at',
         type: 'timestamp',
-        nullable: true,
     })
     createdAt: Date;
 
     @UpdateDateColumn({
         name: 'updated_at',
         type: 'timestamp',
-        nullable: true,
     })
     updatedAt: Date;
 

@@ -8,12 +8,12 @@ import {
     ParseUUIDPipe,
     Param,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Request } from 'express';
-import { JwtPayload } from '../auth/@types/jwt-payload.type';
+import { UserJwtPayload } from '../auth/@types/user-jwt-payload.type';
 import { UsersService } from './user.service';
 
 @ApiTags('Users')
@@ -25,36 +25,33 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     @Get('me')
     async getMe(@Req() request: Request): Promise<Partial<User>> {
-        const { id } = request.user as JwtPayload;
+        const { id } = request.user as UserJwtPayload;
         return await this.usersService.getUserById(id);
     }
 
-    @Get(':userId')
-    async getUserById(@Param('userId') userId: string): Promise<Partial<User>> {
-        return await this.usersService.getUserById(userId);
+    @Get(':id')
+    async getUserById(@Param('id') id: string): Promise<Partial<User>> {
+        return await this.usersService.getUserById(id);
     }
 
-    @Put('me')
     @UseGuards(JwtAuthGuard)
+    @Put('me')
     async updateMe(
         @Req() request: Request,
         @Body() updateUseDto: UpdateUserDto,
     ): Promise<Partial<User>> {
-        const { id } = request.user as JwtPayload;
+        const { id } = request.user as UserJwtPayload;
         const user = await this.usersService.updateUserById(id, updateUseDto);
 
         return user;
     }
 
-    @Put(':userId')
+    @Put(':id')
     async updateUserById(
-        @Param('userId') userId: string,
+        @Param('id') id: string,
         @Body() updateUseDto: UpdateUserDto,
     ): Promise<Partial<User>> {
-        const user = await this.usersService.updateUserById(
-            userId,
-            updateUseDto,
-        );
+        const user = await this.usersService.updateUserById(id, updateUseDto);
 
         return user;
     }
