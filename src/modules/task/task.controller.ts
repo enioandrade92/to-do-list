@@ -19,6 +19,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetTasksFiltersDto } from './dto/get-tasks-filters.dto';
 import { Request } from 'express';
 import { UserJwtPayload } from '../auth/@types/user-jwt-payload.type';
+import { CreateSubTaskDto } from './dto/create-subtask.dto';
 
 @ApiTags('Tasks')
 @ApiBearerAuth()
@@ -27,29 +28,44 @@ import { UserJwtPayload } from '../auth/@types/user-jwt-payload.type';
 export class TaskController {
     constructor(private readonly taskService: TaskService) {}
 
-    @Post()
-    async createTask(@Body() createTaskDto: CreateTaskDto, @Req() request: Request) {
+    @Post('subtask')
+    async createSubtask(
+        @Body() createSubTaskDto: CreateSubTaskDto,
+        @Req() request: Request,
+    ) {
         const user = request.user as UserJwtPayload;
-        return this.taskService.createTask(createTaskDto, user);
+        return await this.taskService.createSubtask(createSubTaskDto, user);
+    }
+
+    @Post()
+    async createTask(
+        @Body() createTaskDto: CreateTaskDto,
+        @Req() request: Request,
+    ) {
+        const user = request.user as UserJwtPayload;
+        return await this.taskService.createTask(createTaskDto, user);
     }
 
     @Get()
     async getTasks(@Query() filters: GetTasksFiltersDto) {
-        return this.taskService.getTasks(filters);
+        return await this.taskService.getTasks(filters);
     }
 
     @Get(':id')
     async getTaskById(@Param('id', ParseUUIDPipe) id: string) {
-        return this.taskService.getTaskById(id);
+        return await this.taskService.getTaskById(id);
     }
 
     @Put(':id')
-    async updateTask(@Param('id', ParseUUIDPipe) id: string, @Body() updateTaskDto: UpdateTaskDto) {
-        return this.taskService.updateTask(id, updateTaskDto);
+    async updateTask(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() updateTaskDto: UpdateTaskDto,
+    ) {
+        return await this.taskService.updateTask(id, updateTaskDto);
     }
 
     @Delete(':id')
     async removeTask(@Param('id', ParseUUIDPipe) id: string) {
-        return this.taskService.removeTask(id);
+        return await this.taskService.removeTask(id);
     }
 }
