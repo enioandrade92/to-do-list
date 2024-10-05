@@ -67,13 +67,21 @@ export class UsersService {
             where: { id },
             select: this.userSelectFields,
         });
-        const createUserData = {
+
+        if (updateUserDto?.password) {
+            const { hashedPassword } = await BcryptUtil.encodePassword(
+                updateUserDto.password,
+            );
+            updateUserDto.password = hashedPassword;
+        }
+
+        const updatedUser = await this.usersRepository.save({
             ...user,
             ...updateUserDto,
-        };
+        });
 
-        await this.usersRepository.save(createUserData);
+        delete updatedUser.password;
 
-        return createUserData;
+        return updatedUser;
     }
 }

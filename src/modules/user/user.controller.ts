@@ -29,11 +29,6 @@ export class UsersController {
         return await this.usersService.getUserById(id);
     }
 
-    @Get(':id')
-    async getUserById(@Param('id') id: string): Promise<Partial<User>> {
-        return await this.usersService.getUserById(id);
-    }
-
     @UseGuards(JwtAuthGuard)
     @Put('me')
     async updateMe(
@@ -41,16 +36,6 @@ export class UsersController {
         @Body() updateUseDto: UpdateUserDto,
     ): Promise<Partial<User>> {
         const { id } = request.user as UserJwtPayload;
-        const user = await this.usersService.updateUserById(id, updateUseDto);
-
-        return user;
-    }
-
-    @Put(':id')
-    async updateUserById(
-        @Param('id') id: string,
-        @Body() updateUseDto: UpdateUserDto,
-    ): Promise<Partial<User>> {
         const user = await this.usersService.updateUserById(id, updateUseDto);
 
         return user;
