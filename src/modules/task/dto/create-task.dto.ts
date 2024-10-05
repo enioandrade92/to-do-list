@@ -12,7 +12,10 @@ export class CreateTaskDto {
     @IsString()
     description: string;
 
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({
+        type: 'enum',
+        enum: TaskStatus,
+    })
     @IsEnum(TaskStatus)
     @IsOptional()
     status = TaskStatus.TO_DO;

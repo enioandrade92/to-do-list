@@ -6,7 +6,10 @@ import { IdRelationDto } from '../../../dto/id-relation.dto';
 import { Type } from 'class-transformer';
 
 export class GetTasksFiltersDto extends PaginateAndOrderDto {
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({
+        type: 'enum',
+        enum: TaskStatus,
+    })
     @IsOptional()
     @IsEnum(TaskStatus)
     status?: TaskStatus;
