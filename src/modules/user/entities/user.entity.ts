@@ -1,5 +1,4 @@
 import {
-    BaseEntity,
     Column,
     CreateDateColumn,
     DeleteDateColumn,
@@ -14,7 +13,6 @@ export class User {
     id: string;
 
     @Column({
-        name: 'first_name',
         type: 'varchar',
         length: '100',
         nullable: false,
