@@ -8,11 +8,11 @@
     "scripts": {
         "build": "nest build",
         "start-prod": "node to-do-app/src/main",
+        "start-local": "docker-compose -f docker-compose-local.yml down && docker-compose -f docker-compose-local.yml up -d && npm run migration-run && npm run start",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
         "start": "nest start --watch",
         "docker-down": "docker-compose down",
         "docker-start": "docker-compose down && docker-compose up",
-        "docker-start-local": "docker-compose -f docker-compose-local.yml down && docker-compose -f docker-compose-local.yml up -d && npm run migration-run && npm run start",
         "docker-test": "docker-compose -f docker-compose-test.yml down && docker-compose -f docker-compose-test.yml up -d",
         "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
         "test": "clear && npm run docker-test && jest --runInBand --config ./test/jest-e2e.json",

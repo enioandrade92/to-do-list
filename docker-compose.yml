@@ -5,7 +5,6 @@ services:
         image: postgres
         restart: always
         environment:
-            POSTGRES_HOST: 'localhost'
             POSTGRES_USER: 'my_user'
             POSTGRES_PASSWORD: 'my_password'
             POSTGRES_DB: 'to_do_list_database'
@@ -14,15 +13,17 @@ services:
             - ./pgdata:/var/lib/postgresql/data
         ports:
             - '5432:5432'
+        networks:
+            - to-do-net
 
     app:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: to-do-app
+        container_name: to-do-list
         environment:
             - PORT=3000
-            - DB_HOST=localhost
+            - DB_HOST=db
             - DB_USER=my_user
             - DB_PASSWORD=my_password
             - DB_NAME=to_do_list_database
@@ -34,3 +35,14 @@ services:
             - '3000:3000'
         depends_on:
             - db
+        networks:
+            - to-do-net
+        command: >
+            sh -c "
+            npm run migration-run &&
+            npm run start
+            "
+
+networks:
+    to-do-net:
+        driver: bridge
