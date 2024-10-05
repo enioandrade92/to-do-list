@@ -62,9 +62,11 @@ export class Task {
     createdBy: User;
 
     @ManyToOne(() => Task, (task) => task.subtasks)
+    @JoinColumn({ name: 'parent' })
     parent: Task;
 
-    // Eager was activated on purpose, I understand that the search becomes heavier, but I believe it makes more sense in this case.
-    @OneToMany(() => Task, (task) => task.parent, { eager: true })
+    @OneToMany(() => Task, (tasks) => tasks.parent, {
+        cascade: true,
+    })
     subtasks: Task[];
 }
