@@ -1,20 +1,20 @@
 import * as request from 'supertest';
 import { TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { TokensDto } from '../../../src/modules/auth/dto/tokens.dto';
 import { RepositoryFactory } from '../../factories/repository.factory';
 import { createTestModule } from '../../factories/create-test-module.factory';
 import { TasksTestFactory } from './task-test.factory';
 import { TaskStatus } from '../../../src/modules/task/@types/task-status.enum';
 import { Task } from '../../../src/modules/task/entities/task.entity';
 import { User } from '../../../src/modules/user/entities/user.entity';
+import { Tokens } from '../../../src/modules/auth/@types/tokens.type';
 
 describe('Task (e2e)', () => {
     let app: INestApplication;
     let moduleRef: TestingModule;
     let repositoryFactory: RepositoryFactory;
     let taskTestFactory: TasksTestFactory;
-    let MOCK_TOKENS: TokensDto;
+    let MOCK_TOKENS: Tokens;
     let FAKE_UUID: string = 'fa7c3b89-5a10-45b5-a5d6-59b10c285149';
     let baseUser: User;
     let baseTask: Task;

@@ -1,17 +1,17 @@
 import * as request from 'supertest';
 import { TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { TokensDto } from '../../../src/modules/auth/dto/tokens.dto';
 import { RepositoryFactory } from '../../factories/repository.factory';
 import { createTestModule } from '../../factories/create-test-module.factory';
 import { UsersTestFactory } from './user-test.factory';
+import { Tokens } from '../../../src/modules/auth/@types/tokens.type';
 
 describe('User (e2e)', () => {
     let app: INestApplication;
     let moduleRef: TestingModule;
     let repositoryFactory: RepositoryFactory;
     let userTestFactory: UsersTestFactory;
-    let MOCK_TOKENS: TokensDto;
+    let MOCK_TOKENS: Tokens;
 
     beforeAll(async () => {
         const res = await createTestModule();
@@ -31,20 +31,18 @@ describe('User (e2e)', () => {
         await moduleRef.close();
     });
 
-    describe('1 - /PUT users/:userId', () => {
+    describe('1 - /PUT users/me', () => {
         it('1.1 - should update a user and return it', async () => {
-            const updatedTestEmail = 'update@test-success.com';
-
             const response = await request(app.getHttpServer())
                 .put('/users/me')
                 .set('Authorization', `Bearer ${MOCK_TOKENS.access_token}`)
                 .send({
-                    email: updatedTestEmail,
+                    email: 'update@test.com',
                 });
 
             expect(response.body).toEqual({
                 id: expect.any(String),
-                email: updatedTestEmail,
+                email: 'update@test.com',
                 name: expect.any(String),
                 createdAt: expect.any(String),
                 updatedAt: expect.any(String),

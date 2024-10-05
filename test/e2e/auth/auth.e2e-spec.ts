@@ -2,14 +2,14 @@ import { TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { RefreshTokenDto } from '../../../src/modules/auth/dto/refresh-token.dto';
-import { TokensDto } from '../../../src/modules/auth/dto/tokens.dto';
 import { SignInDto } from '../../../src/modules/auth/dto/sign-in.dto';
 import { SignUpDto } from '../../../src/modules/auth/dto/sign-up.dto';
 import { AuthTestFactory } from './auth-test.factory';
 import { RepositoryFactory } from '../../factories/repository.factory';
 import { createTestModule } from '../../factories/create-test-module.factory';
+import { Tokens } from '../../../src/modules/auth/@types/tokens.type';
 
-let mockTokens: TokensDto;
+let MOCK_TOKENS: Tokens;
 
 describe('Auth (e2e)', () => {
     let app: INestApplication;
@@ -77,7 +77,7 @@ describe('Auth (e2e)', () => {
             refresh_token: expect.stringMatching(ACCESS_TOKEN_PATTERN),
         };
 
-        mockTokens = response.body;
+        MOCK_TOKENS = response.body;
         expect(response.body).toEqual(expected);
         expect(response.statusCode).toEqual(201);
     });
@@ -97,11 +97,11 @@ describe('Auth (e2e)', () => {
     it('5 - should return a new access token', async () => {
         const response = await request(app.getHttpServer())
             .post('/auth/refresh-token')
-            .send(<RefreshTokenDto>{ refreshToken: mockTokens.refresh_token });
+            .send(<RefreshTokenDto>{ refreshToken: MOCK_TOKENS.refresh_token });
 
         expect(response.body).toEqual({
             access_token: expect.stringMatching(ACCESS_TOKEN_PATTERN),
-            refresh_token: mockTokens.refresh_token,
+            refresh_token: MOCK_TOKENS.refresh_token,
         });
         expect(response.statusCode).toEqual(201);
     });
