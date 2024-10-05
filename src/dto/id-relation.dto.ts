@@ -1,8 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsUUID } from 'class-validator';
 
 export class IdRelationDto {
-    @ApiProperty()
+    @ApiPropertyOptional()
     @IsUUID()
     id: string;
 }
