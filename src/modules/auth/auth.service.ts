@@ -8,9 +8,9 @@ import { FindOptionsSelect, Repository } from 'typeorm';
 import BcryptUtil from './utils/bcrypt.util';
 import JwtUtil from './utils/jwt.util';
 import { SignInDto } from './dto/sign-in.dto';
-import { TokensDto } from './dto/tokens.dto';
 import { UserJwtPayload } from './@types/user-jwt-payload.type';
 import { User } from '../user/entities/user.entity';
+import { Tokens } from './@types/tokens.type';
 
 @Injectable()
 export class AuthService {
@@ -51,7 +51,7 @@ export class AuthService {
         return user;
     }
 
-    async generateAuthTokens(user: Partial<User>): Promise<TokensDto> {
+    async generateAuthTokens(user: Partial<User>): Promise<Tokens> {
         const payload: UserJwtPayload = {
             id: user.id,
             email: user.email,
@@ -66,7 +66,7 @@ export class AuthService {
         return tokens;
     }
 
-    async refreshToken(token: string): Promise<TokensDto> {
+    async refreshToken(token: string): Promise<Tokens> {
         JwtUtil.verifyToken(token);
         const decoded = JwtUtil.decodeToken(token);
         delete decoded.exp;
