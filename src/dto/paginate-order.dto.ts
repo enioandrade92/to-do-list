@@ -11,10 +11,10 @@ export class PaginateAndOrderDto {
     @ApiPropertyOptional()
     @IsOptional()
     @IsNumberString()
-    page? = 1;
+    page? = '1';
 
     @ApiPropertyOptional()
     @IsOptional()
     @IsNumberString()
-    limit? = 10;
+    limit? = '10';
 }
