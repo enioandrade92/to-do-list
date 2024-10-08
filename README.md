@@ -1,16 +1,12 @@
-## Rodando o projeto
+## Implementações no Projeto:
 
-### O que é necessário para rodar o projeto:
-- Ter docker-compose e docker instalados.
-
-```bash
-# Para rodar os testes:
-$ npm run docker-test
-
-# Rodando a aplicação com docker-compose:
-$ npm run docker-start
-
-
-```
-## Swagger:
-- URL: http://localhost:3000/docs#/
+- Autenticação com "JWT";
+- Validação de dados com "class-validator";
+- Documentação com "Swagger";
+- Banco de dados "PostgreSQL";
+- Relacionamento 1:N e N:1;
+- Dockerização da aplicação com o banco;
+- Teste e2e com "Jest";
+- Comunicação com o banco utilizando o "TypeOrm";
+  
+  
