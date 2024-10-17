@@ -1,0 +1,35 @@
+/* app.css */
+
+/* Custom styles for the TodoList component */
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #e5e7eb; /* Using a Tailwind color */
+}
+
+.todo-item:hover {
+    background-color: #f9fafb; /* Another Tailwind color for hover effect */
+}
+
+.todo-text {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #6b7280; /* Tailwind's gray-500 */
+}
+
+.delete-button {
+    background-color: #ef4444; /* Tailwind's red-500 */
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.delete-button:hover {
+    background-color: #dc2626; /* Tailwind's red-600 */
+}
